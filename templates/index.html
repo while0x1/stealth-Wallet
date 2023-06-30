@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="addressbox">
+    <!-- <form action="http://127.0.0.1:5000/query" method="POST">
+        <p>Enter Wallet Address</p>
+        <input name="address" value="{{ request.form['address'] }}" type="text" placeholder="addr1qxh359cx96nh83238w7gujf6zjpaq29s2h9933t9892l8t5ftd27xul0dagaax3ra869dsxcnhtec8gd6rz4u7j3fl3q3nhsck" size="104" required>
+        <button type="button" class="btn">Submit</button> 
+    </form> -->
+</div>
+
+<form action="http://127.0.0.1:5000/query" method="POST">
+    <div class="mb-3">
+      <label for="walletAddress" class="form-label">Enter Wallet Address</label>
+      <input type="text" class="form-control" id="walletAddress" name="address"
+        placeholder="addr1qxh359cx96nh83238w7gujf6zjpaq29s2h9933t9892l8t5ftd27xul0dagaax3ra869dsxcnhtec8gd6rz4u7j3fl3q3nhsck" 
+        size="104" required>
+      <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>
+    <button type="submit" class="btn btn-secondary">Submit</button>
+  </form>
+
+    
+
+{% endblock %}

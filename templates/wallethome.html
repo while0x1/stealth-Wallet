@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>{{ walletinfo['address'] }}</h4>
+<h2>Balance: {{ walletinfo['balance'] }} ₳ </h2>
+<h2>{% block title %} Craft a Transaction {% endblock %}</h2>
+{% endblock %}

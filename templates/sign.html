@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <h3>{% block title %} Unsigned CBOR {% endblock %}</h3>
+    <!-- <div layout="column">
+        <textarea name="content" rows="10" cols="100" id="unsignedCBOR" >
+            
+            {{ unsignedTx }}
+            
+        </textarea>
+    </div> <-->
+
+    <div layout="column" style="padding-bottom:5px">
+        <div class="mb-3">
+            <textarea rows="6" cols="100" id="unsignedCBOR" class="form-control" aria-label="Unsigned CBOR">{{ unsignedTx }}</textarea>
+        </div>
+        <div class="mb-3" >
+            <button onclick="copy()" class="btn btn-secondary">Copy Transaction CBOR</button>
+        </div>
+    </div>
+    
+    <script>
+        function copy() {
+            // Get the text field
+            var copyText = document.getElementById("unsignedCBOR").innerHTML; 
+            
+            let trimText = copyText.trim();
+            console.log(trimText);
+             // Copy the text inside the text field
+            navigator.clipboard.writeText(trimText);          
+            // Alert the copied text
+            alert("Copied Unsigned Transaction CBOR");
+          }
+    </script>
+    <h3>Signed CBOR</h3>
+    <h5>Paste Signed Transaction CBOR here:</h5>
+    <form form action="http://127.0.0.1:5000/submit" method="POST" id="txform">
+        <div class="mb-3">
+          <textarea id="signedCBOR" class="form-control" name = "signedCBOR" rows="6" cols="100" required> </textarea>
+          <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-secondary">Submit Transaction</button>
+        </div>
+    </form>
+    
+
+{% endblock %}

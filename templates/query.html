@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+        window.addEventListener('load', function () {
+            document.querySelectorAll('[data-bs-toggle="popover"]')
+            .forEach(popover => {
+              new bootstrap.Popover(popover)
+            })   
+          })
+</script>
+<div class="container">
+    <div class="container">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal1">Transaction
+            </button>
+            <button type="button" class="btn btn-secondary" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal2">Staking</button>
+            <button type="button" class="btn btn-secondary">Future</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h5><span class="badge bg-secondary">{{ walletinfo['address'] }}</span></h5>
+        <h2>Balance: {{ walletinfo['balance'] }} ₳ </h2>
+        <h3>Staking: {{ walletinfo['ticker'] }} </h3>
+    </div>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModal1Label" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModal1Label">Create Transaction</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="http://127.0.0.1:5000/tx" method="POST" >
+            
+                        <input type = "hidden" name = "from_address" value = "{{ walletinfo['address'] }}"/>
+                        <input type = "hidden" name = "tx_type" value = 'tx'/>
+                        <div class="mb-3">
+                        <label for="inputsm" class="form-label">Recipients Address</label>
+                        <input class="form-control" type = "text" name = "Address" size="104" required/>
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        </div>
+                        <div class="mb-3">
+                            <label for="ADA" class="form-label">$ADA Amount</label>
+                            <input class="form-control" type = "text" name = "ADA" />
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="AssetSelector" id="asset" name="assetlist">
+                                <option selected>Native Assets</option>
+                                {% for asset in walletinfo['assets'] %}
+                                <option value="{{asset}}">{{asset['assetname']}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assetamount" class="form-label">Asset Amount</label>
+                            <input type = "text" class="form-control" name = "assetamount" />
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Submit</button>
+                    </form>
+                </div>
+                <!-- 
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                <-->
+              </div>
+            </div>
+          </div>
+
+          
+            
+            <div class="container">
+                <div class="row justify-content-md-center ">
+                
+                {% for asset in walletinfo['assets'] %}
+                    <div class="col col-lg-3 pt-3">
+                        <div class="card" >
+                            <div class="card-body">
+                            <h5 class="card-title">{{asset['assetname']}}</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{asset['amount']}}</h6>   
+                            <h5 style="cursor:pointer;"><span class="badge bg-secondary" data-bs-toggle="popover" data-bs-title="Hex Name" data-bs-content= {{asset['assethex']}}>hex name</span></h5>
+                            <h5 style="cursor:pointer;"><span class="badge bg-secondary" data-bs-toggle="popover" data-bs-title="Policy ID" data-bs-content= {{asset['policy']}}>policy</span></h5>
+                           
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+  
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModal2Label">Staking</h1>
+                          
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="http://127.0.0.1:5000/tx" method="POST" >
+                            <h1 class="modal-title fs-5" id="exampleModal2Label">Staking Registration</h1>
+                            <input type = "hidden" name = "from_address" value = "{{ walletinfo['address'] }}"/>
+                            <input type = "hidden" name = "tx_type" value = "stake"/>
+                            <div class="mb-3">
+                                <label for="poolhash" class="form-label">Pool Hash</label>
+                                <input class="form-control" type = "text" name = "poolhash" required/>
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Stake</button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+</div>
+
+
+
+{% endblock %}
